@@ -13,3 +13,73 @@
 @import url("../blocks/profile/__edit-button/profile__edit-button.css");
 @import url("../blocks/profile/__work/profile__work.css");
 @import url("../blocks/profile/__add-button/profile__add-button.css");
+
+.content__gallery {
+  margin: 0 0 21px 0;
+}
+.gallery__cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px 17px;
+}
+
+@media screen and (max-width: 860px) {
+  .gallery__cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 580px) {
+  .gallery__cards {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.card {
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.card__image {
+  width: 100%;
+  object-fit: cover;
+  line-height: 0;
+}
+.card__heading {
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  padding: 26px 20px;
+}
+.card__title {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 1;
+  margin: 0 30px 0 0;
+}
+.card__like {
+  align-self: center;
+  min-width: 22px;
+  height: 19px;
+  border: none;
+  background: url("../images/like.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.card__like:hover {
+  opacity: 0.6;
+}
+
+.card__like_active {
+  background: url("../images/like-active.svg");
+}
