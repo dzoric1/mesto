@@ -22,10 +22,10 @@
         <img class="profile__avatar" src="images/avatar.jpg" alt="Аватар">
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
-          <button class="profile__edit-button" type="button"></button>
+          <button class="profile__edit-button" type="button" aria-label="Редактирование профиля"></button>
           <p class="profile__work">Исследователь океана</p>
         </div>
-        <button class="profile__add-button"></button>
+        <button class="profile__add-button" type="button" aria-label="Добавить карточку"></button>
       </section>
       <section class="content__gallery gallery">
         <ul class="gallery__cards">
@@ -33,42 +33,42 @@
             <img class="card__image" src="images/gallery/1.jpg" alt="Карачаевск">
             <div class="card__heading">
               <h2 class="card__title">Карачаевск</h2>
-              <button class="card__like card__like_active" type="button"></button>
+              <button class="card__like card__like_active" type="button" aria-label="Лайк"></button>
             </div>
           </li>
           <li class="gallery__card card">
             <img class="card__image" src="images/gallery/2.jpg" alt="Гора Эльбрус">
             <div class="card__heading">
               <h2 class="card__title">Гора Эльбрус</h2>
-              <button class="card__like" type="button"></button>
+              <button class="card__like" type="button" aria-label="Лайк"></button>
             </div>
           </li>
           <li class="gallery__card card">
             <img class="card__image" src="images/gallery/3.jpg" alt="Домбай">
             <div class="card__heading">
               <h2 class="card__title">Домбай</h2>
-              <button class="card__like" type="button"></button>
+              <button class="card__like" type="button" aria-label="Лайк"></button>
             </div>
           </li>
           <li class="gallery__card card">
             <img class="card__image" src="images/gallery/4.jpg" alt="Гора Эльбрус">
             <div class="card__heading">
               <h2 class="card__title">Гора Эльбрус</h2>
-              <button class="card__like" type="button"></button>
+              <button class="card__like" type="button" aria-label="Лайк"></button>
             </div>
           </li>
           <li class="gallery__card card">
             <img class="card__image" src="images/gallery/5.jpg" alt="Домбай">
             <div class="card__heading">
               <h2 class="card__title">Домбай</h2>
-              <button class="card__like" type="button"></button>
+              <button class="card__like" type="button" aria-label="Лайк"></button>
             </div>
           </li>
           <li class="gallery__card card">
             <img class="card__image" src="images/gallery/6.jpg" alt="Карачаево-Черкесия">
             <div class="card__heading">
               <h2 class="card__title">Карачаево-Черкесия</h2>
-              <button class="card__like" type="button"></button>
+              <button class="card__like" type="button" aria-label="Лайк"></button>
             </div>
           </li>
         </ul>
@@ -79,17 +79,18 @@
     </footer>
     <div class="popup">
       <div class="popup__container">
-        <button class="popup__close" type="button"></button>
+        <button class="popup__close" type="button" aria-label="Закрыть попап"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
-        <form class="popup__form">
-          <input class="popup__form-input popup__form-input_type_name" type="text" placeholder="Имя">
-          <input class="popup__form-input popup__form-input_type_job" type="text" placeholder="Деятельность">
+        <form class="popup__form" name="formElement">
+          <input class="popup__form-input popup__form-input_type_name" type="text" placeholder="Имя" name="inputName">
+          <input class="popup__form-input popup__form-input_type_job" type="text" placeholder="Деятельность"
+            name="inputJob">
           <button class="popup__submit" type="submit">Сохранить</button>
         </form>
       </div>
     </div>
   </div>
-  <script src="pages/index.js"></script>
+  <script src="scripts/index.js"></script>
 </body>
 
 </html>

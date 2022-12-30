@@ -14,15 +14,17 @@ function handleFormSubmit(evt) {
   popup.classList.remove('popup_open');
 }
 
-profileEditButton.addEventListener('click', function () {
+function openPopup() {
   inputName.value = profileName.textContent;
   inputJob.value = profileJob.textContent;
   popup.classList.add('popup_open');
-});
+}
 
-profileCloseButton.addEventListener('click', function () {
+function closePopup() {
   popup.classList.remove('popup_open')
-});
+}
 
+profileEditButton.addEventListener('click', openPopup);
+profileCloseButton.addEventListener('click', closePopup);
 formElement.addEventListener('submit', handleFormSubmit);
 
