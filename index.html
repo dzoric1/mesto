@@ -32,14 +32,14 @@
       </section>
     </main>
     <footer class="footer">
-      <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
+      <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
     </footer>
 
-    <div class="popup">
+    <div class="popup popup_type_edit">
       <div class="popup__container">
         <button class="popup__close" type="button" aria-label="Закрыть попап"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
-        <form class="popup__form" name="form-element">
+        <form class="popup__form popup__form_type_edit" name="form-element">
           <input class="popup__form-input popup__form-input_type_name" type="text" placeholder="Имя" name="input-name">
           <input class="popup__form-input popup__form-input_type_job" type="text" placeholder="Деятельность"
             name="input-job">
@@ -47,6 +47,22 @@
         </form>
       </div>
     </div>
+
+    <div class="popup popup_type_add">
+      <div class="popup__container">
+        <button class="popup__close" type="button" aria-label="Закрыть попап"></button>
+        <h2 class="popup__title">Новое место</h2>
+        <form class="popup__form popup__form_type_add" name="form-element">
+          <input class="popup__form-input popup__form-input_type_location" type="text" placeholder="Название"
+            name="input-location">
+          <input class="popup__form-input popup__form-input_type_url" type="url" placeholder="Ссылка на картинку"
+            name="input-url">
+          <button class="popup__submit" type="submit">Создать</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
   </div>
 
   <template id="card-template">
