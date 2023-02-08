@@ -87,16 +87,17 @@ function addCard(title, url) {
 
 profileEditButton.addEventListener('click', () => openPopup(popupEdit));
 profileAddButton.addEventListener('click', () => openPopup(popupAdd));
-profileCloseButtons[0].addEventListener('click', () => closePopup(popupEdit));
-profileCloseButtons[1].addEventListener('click', () => closePopup(popupAdd));
-profileCloseButtons[2].addEventListener('click', () => closePopup(popupImage));
+
+profileCloseButtons.forEach(btn => {
+  btn.addEventListener('click', e => {
+    closePopup(e.target.closest('.popup'));
+  });
+});
+
 formEdit.addEventListener('submit', handleEditFormSubmit);
 formAdd.addEventListener('submit', handleAddFormSubmit);
 
-
 cardContainer.addEventListener('click', evt => {
-  console.log(evt.target);
-  console.log();
   if (evt.target.classList.contains('card__image')) {
     popupImage.querySelector('.popup__image').setAttribute('src', evt.target.getAttribute('src'));
     const card = evt.target.closest('.card');
@@ -104,7 +105,6 @@ cardContainer.addEventListener('click', evt => {
     openPopup(popupImage);
   }
 });
-
 
 initialCards.forEach(card => {
   addCard(card.name, card.link);
