@@ -3,11 +3,11 @@ import { initialCards } from './card.js';
 const popupEdit = document.querySelector('.popup_type_edit');
 const popupAdd = document.querySelector('.popup_type_add');
 const popupImage = document.querySelector('.popup_type_image');
+const popups = document.querySelectorAll('.popup');
 const popupImageItem = popupImage.querySelector('.popup__image');
 const popupImageText = popupImage.querySelector('.popup__location');
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
-const profileCloseButtons = document.querySelectorAll('.popup__close');
 const inputName = document.querySelector('.popup__form-input_type_name');
 const inputJob = document.querySelector('.popup__form-input_type_job');
 const inputLocation = document.querySelector('.popup__form-input_type_location');
@@ -77,11 +77,14 @@ profileEditButton.addEventListener('click', () => {
   setInputsEditForm();
   openPopup(popupEdit);
 });
+
 profileAddButton.addEventListener('click', () => openPopup(popupAdd));
 
-profileCloseButtons.forEach(btn => {
-  btn.addEventListener('click', evt => {
-    closePopup(evt.target.closest('.popup'));
+popups.forEach(popup => {
+  popup.addEventListener('click', evt => {
+    if (evt.target.classList.contains('popup_open') || evt.target.classList.contains('popup__close')) {
+      closePopup(popup);
+    }
   });
 });
 
