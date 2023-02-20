@@ -40,8 +40,12 @@ function setInputsEditForm() {
 
 function openPopup(popup) {
   popup.classList.add('popup_open');
+  document.addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape') {
+      closePopup(popup);
+    }
+  });
 }
-
 function closePopup(popup) {
   popup.classList.remove('popup_open');
 }
