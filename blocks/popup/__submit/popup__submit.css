@@ -10,7 +10,8 @@
   color: #ffffff;
   cursor: pointer;
   border: none;
-  transition: opacity 0.3s ease;
+  transition: all 0.3s ease;
+  margin-top: 45px;
 }
 
 .popup__submit:focus {
@@ -25,5 +26,6 @@
   .popup__submit {
     font-size: 14px;
     padding: 10px 0;
+    margin-top: 43px;
   }
 }

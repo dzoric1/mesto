@@ -40,14 +40,18 @@ function setInputsEditForm() {
 
 function openPopup(popup) {
   popup.classList.add('popup_open');
-  document.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape') {
-      closePopup(popup);
-    }
-  });
+  document.addEventListener('keydown', closeEscPopup);
 }
+
 function closePopup(popup) {
   popup.classList.remove('popup_open');
+  document.removeEventListener('keydown', closeEscPopup);
+}
+
+function closeEscPopup(evt) {
+  if (evt.key === 'Escape') {
+    closePopup(document.querySelector('.popup_open'));
+  }
 }
 
 function generationCard(title, url) {

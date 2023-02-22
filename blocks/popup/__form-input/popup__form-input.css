@@ -8,10 +8,7 @@
   padding: 13px 0;
   box-sizing: border-box;
   margin: 0 0 12px 0;
-}
-
-.popup__form-input:last-of-type {
-  margin: 0 0 45px 0;
+  transition: border-bottom 0.3s ease;
 }
 
 .popup__form-input::placeholder {
@@ -25,9 +22,5 @@
 @media screen and (max-width: 767px) {
   .popup__form-input {
     margin: 0 0 17px 0;
-  }
-
-  .popup__form-input:last-of-type {
-    margin: 0 0 43px 0;
   }
 }
