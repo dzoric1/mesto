@@ -1,30 +1,41 @@
-function showInputError(formElement, inputElement, errorMessage) {
+function showInputError(formElement, inputElement, inputErrorClass, errorMessage) {
   const errorElement = formElement.querySelector(`.${inputElement.name}-error`);
-  inputElement.classList.add('popup__form-input_type_error');
+  inputElement.classList.add(inputErrorClass);
   errorElement.textContent = errorMessage;
 }
 
-function hideInputError(formElement, inputElement) {
+function hideInputError(formElement, inputElement, inputErrorClass) {
   const errorElement = formElement.querySelector(`.${inputElement.name}-error`);
-  inputElement.classList.remove('popup__form-input_type_error');
+  inputElement.classList.remove(inputErrorClass);
   errorElement.textContent = '';
 }
 
-function checkInputValidity(formElement, inputElement) {
+function checkInputValidity(formElement, inputElement, inputErrorClass) {
   if (!inputElement.validity.valid) {
-    showInputError(formElement, inputElement, inputElement.validationMessage);
+    showInputError(formElement, inputElement, inputErrorClass, inputElement.validationMessage);
   } else {
-    hideInputError(formElement, inputElement);
+    hideInputError(formElement, inputElement, inputErrorClass);
   }
 }
 
-function setEventListeners(formElement) {
-  const inputList = Array.from(formElement.querySelectorAll('.popup__form-input'));
-  const buttonElement = formElement.querySelector('.popup__submit');
+function singleValidation(formElement, { inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass }) {
+  const inputList = Array.from(formElement.querySelectorAll(inputSelector));
+  const buttonElement = formElement.querySelector(submitButtonSelector);
+
+  toggleButtonState(inputList, buttonElement, inactiveButtonClass);
+
+  inputList.forEach((inputElement) => {
+    hideInputError(formElement, inputElement, inputErrorClass);
+  });
+}
+
+function setEventListeners(formElement, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass) {
+  const inputList = Array.from(formElement.querySelectorAll(inputSelector));
+  const buttonElement = formElement.querySelector(submitButtonSelector);
   inputList.forEach(inputElement => {
     inputElement.addEventListener('input', () => {
-      checkInputValidity(formElement, inputElement);
-      toggleButtonState(inputList, buttonElement);
+      checkInputValidity(formElement, inputElement, inputErrorClass);
+      toggleButtonState(inputList, buttonElement, inactiveButtonClass);
     });
   });
 }
@@ -35,24 +46,21 @@ function hasInvalidInput(inputList) {
   });
 }
 
-function toggleButtonState(inputList, buttonElement) {
+function toggleButtonState(inputList, buttonElement, inactiveButtonClass) {
   if (hasInvalidInput(inputList)) {
-    buttonElement.classList.add('popup__submit_type_disabled');
+    buttonElement.classList.add(inactiveButtonClass);
     buttonElement.setAttribute("disabled", "disabled");
   } else {
-    buttonElement.classList.remove('popup__submit_type_disabled');
+    buttonElement.classList.remove(inactiveButtonClass);
     buttonElement.removeAttribute("disabled", "disabled");
   }
 }
 
-function enableValidation() {
-  const formList = Array.from(document.querySelectorAll('.popup__form'));
+function enableValidation({ formSelector, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass }) {
+  const formList = Array.from(document.querySelectorAll(formSelector));
   formList.forEach(formElement => {
-    formElement.addEventListener('submit', evt => {
-      evt.preventDefault();
-    });
-    setEventListeners(formElement);
+    setEventListeners(formElement, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass);
   });
 }
 
-enableValidation();
+export { enableValidation, singleValidation };

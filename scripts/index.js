@@ -1,4 +1,5 @@
 import { initialCards } from './card.js';
+import { enableValidation, singleValidation } from './validation.js';
 
 const popupEdit = document.querySelector('.popup_type_edit');
 const popupAdd = document.querySelector('.popup_type_add');
@@ -18,6 +19,14 @@ const formEdit = document.querySelector('.popup__form_type_edit');
 const formAdd = document.querySelector('.popup__form_type_add');
 const cardContainer = document.querySelector('.gallery__cards');
 const cardTemplate = document.querySelector('#card-template').content;
+
+const validateSettings = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__form-input',
+  submitButtonSelector: '.popup__submit',
+  inactiveButtonClass: 'popup__submit_type_disabled',
+  inputErrorClass: 'popup__form-input_type_error',
+};
 
 function handleEditFormSubmit(evt) {
   evt.preventDefault();
@@ -39,6 +48,7 @@ function setInputsEditForm() {
 }
 
 function openPopup(popup) {
+  singleValidation(popup, validateSettings);
   popup.classList.add('popup_open');
   document.addEventListener('keydown', closeEscPopup);
 }
@@ -102,3 +112,5 @@ formAdd.addEventListener('submit', handleAddFormSubmit);
 initialCards.forEach(card => {
   addCard(generationCard(card.name, card.link));
 });
+
+enableValidation(validateSettings);
