@@ -48,7 +48,6 @@ function setInputsEditForm() {
 }
 
 function openPopup(popup) {
-  singleValidation(popup, validateSettings);
   popup.classList.add('popup_open');
   document.addEventListener('keydown', closeEscPopup);
 }
@@ -93,6 +92,7 @@ function addCard(card) {
 
 profileEditButton.addEventListener('click', () => {
   setInputsEditForm();
+  singleValidation(popupEdit, validateSettings);
   openPopup(popupEdit);
 });
 
