@@ -1,4 +1,4 @@
-import { initialCards } from './card.js';
+import { initialCards } from './initialCards.js';
 import { enableValidation, singleValidation } from './validation.js';
 
 const popupEdit = document.querySelector('.popup_type_edit');
@@ -40,6 +40,7 @@ function handleAddFormSubmit(evt) {
   addCard(generationCard(inputLocation.value, inputUrl.value));
   closePopup(popupAdd);
   evt.target.reset();
+  singleValidation(popupAdd, validateSettings);
 }
 
 function setInputsEditForm() {
@@ -48,18 +49,18 @@ function setInputsEditForm() {
 }
 
 function openPopup(popup) {
-  popup.classList.add('popup_open');
+  popup.classList.add('popup_opened');
   document.addEventListener('keydown', closeEscPopup);
 }
 
 function closePopup(popup) {
-  popup.classList.remove('popup_open');
+  popup.classList.remove('popup_opened');
   document.removeEventListener('keydown', closeEscPopup);
 }
 
 function closeEscPopup(evt) {
   if (evt.key === 'Escape') {
-    closePopup(document.querySelector('.popup_open'));
+    closePopup(document.querySelector('.popup_opened'));
   }
 }
 
@@ -100,7 +101,7 @@ profileAddButton.addEventListener('click', () => openPopup(popupAdd));
 
 popups.forEach(popup => {
   popup.addEventListener('click', evt => {
-    if (evt.target.classList.contains('popup_open') || evt.target.classList.contains('popup__close')) {
+    if (evt.target.classList.contains('popup_opened') || evt.target.classList.contains('popup__close')) {
       closePopup(popup);
     }
   });
