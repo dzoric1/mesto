@@ -1,12 +1,14 @@
 import { initialCards } from './initialCards.js';
-import { enableValidation, singleValidation } from './validation.js';
+// import { enableValidation, singleValidation } from './modules/validation.js';
+import Card from './modules/Card.js';
+import FormValidator from './modules/FormValidator.js';
 
 const popupEdit = document.querySelector('.popup_type_edit');
 const popupAdd = document.querySelector('.popup_type_add');
-const popupImage = document.querySelector('.popup_type_image');
+export const popupImage = document.querySelector('.popup_type_image');
 const popups = document.querySelectorAll('.popup');
-const popupImageItem = popupImage.querySelector('.popup__image');
-const popupImageText = popupImage.querySelector('.popup__location');
+export const popupImageItem = popupImage.querySelector('.popup__image');
+export const popupImageText = popupImage.querySelector('.popup__location');
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
 const inputName = document.querySelector('.popup__form-input_type_name');
@@ -18,7 +20,6 @@ const profileJob = document.querySelector('.profile__work');
 const formEdit = document.querySelector('.popup__form_type_edit');
 const formAdd = document.querySelector('.popup__form_type_add');
 const cardContainer = document.querySelector('.gallery__cards');
-const cardTemplate = document.querySelector('#card-template').content;
 
 const validateSettings = {
   formSelector: '.popup__form',
@@ -37,10 +38,19 @@ function handleEditFormSubmit(evt) {
 
 function handleAddFormSubmit(evt) {
   evt.preventDefault();
-  addCard(generationCard(inputLocation.value, inputUrl.value));
+
+  const data = {
+    name: inputLocation.value,
+    link: inputUrl.value
+  };
+
+  const card = new Card(data, '#card-template');
+
+  addCard(card.generationCard());
+
   closePopup(popupAdd);
   evt.target.reset();
-  singleValidation(popupAdd, validateSettings);
+  new FormValidator(validateSettings, popupAdd).singleValidation();
 }
 
 function setInputsEditForm() {
@@ -48,7 +58,7 @@ function setInputsEditForm() {
   inputJob.value = profileJob.textContent;
 }
 
-function openPopup(popup) {
+export function openPopup(popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', closeEscPopup);
 }
@@ -64,36 +74,13 @@ function closeEscPopup(evt) {
   }
 }
 
-function generationCard(title, url) {
-  const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
-  const cardImage = cardElement.querySelector('.card__image');
-
-  cardElement.querySelector('.card__title').textContent = title;
-  cardImage.setAttribute('src', url);
-  cardImage.setAttribute('alt', title);
-  cardElement.querySelector('.card__like').addEventListener('click', evt => {
-    evt.target.classList.toggle('card__like_active');
-  });
-  cardElement.querySelector('.card__delete').addEventListener('click', () => {
-    cardElement.remove();
-  });
-  cardImage.addEventListener('click', evt => {
-    popupImageItem.setAttribute('src', evt.target.getAttribute('src'));
-    popupImageItem.setAttribute('alt', evt.target.getAttribute('alt'));
-    popupImageText.textContent = cardElement.querySelector('.card__title').textContent;
-    openPopup(popupImage);
-  });
-
-  return cardElement;
-}
-
 function addCard(card) {
   cardContainer.prepend(card);
 }
 
 profileEditButton.addEventListener('click', () => {
   setInputsEditForm();
-  singleValidation(popupEdit, validateSettings);
+  new FormValidator(validateSettings, popupEdit).singleValidation();
   openPopup(popupEdit);
 });
 
@@ -110,8 +97,12 @@ popups.forEach(popup => {
 formEdit.addEventListener('submit', handleEditFormSubmit);
 formAdd.addEventListener('submit', handleAddFormSubmit);
 
-initialCards.forEach(card => {
-  addCard(generationCard(card.name, card.link));
+initialCards.forEach(data => {
+  const card = new Card(data, '#card-template');
+  addCard(card.generationCard());
 });
 
-enableValidation(validateSettings);
+const formList = Array.from(document.querySelectorAll(validateSettings.formSelector));
+formList.forEach(formElement => {
+  new FormValidator(validateSettings, formElement).enableValidation();
+});
