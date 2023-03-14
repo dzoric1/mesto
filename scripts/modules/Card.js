@@ -33,9 +33,9 @@ class Card {
     });
 
     this._cardImage.addEventListener('click', evt => {
-      popupImageItem.setAttribute('src', evt.target.getAttribute('src'));
-      popupImageItem.setAttribute('alt', evt.target.getAttribute('alt'));
-      popupImageText.textContent = this._element.querySelector('.card__title').textContent;
+      popupImageItem.setAttribute('src', this._url);
+      popupImageItem.setAttribute('alt', this._title);
+      popupImageText.textContent = this._title;
       openPopup(popupImage);
     });
 

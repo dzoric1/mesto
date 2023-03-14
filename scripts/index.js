@@ -1,5 +1,4 @@
 import { initialCards } from './initialCards.js';
-// import { enableValidation, singleValidation } from './modules/validation.js';
 import Card from './modules/Card.js';
 import FormValidator from './modules/FormValidator.js';
 
@@ -44,13 +43,10 @@ function handleAddFormSubmit(evt) {
     link: inputUrl.value
   };
 
-  const card = new Card(data, '#card-template');
-
-  addCard(card.generationCard());
-
+  addCard(createCard(data));
   closePopup(popupAdd);
   evt.target.reset();
-  new FormValidator(validateSettings, popupAdd).singleValidation();
+  formAddValidator.singleValidation();
 }
 
 function setInputsEditForm() {
@@ -74,13 +70,18 @@ function closeEscPopup(evt) {
   }
 }
 
+function createCard(data) {
+  const card = new Card(data, '#card-template');
+  return card.generationCard();
+}
+
 function addCard(card) {
   cardContainer.prepend(card);
 }
 
 profileEditButton.addEventListener('click', () => {
   setInputsEditForm();
-  new FormValidator(validateSettings, popupEdit).singleValidation();
+  formEditValidator.singleValidation();
   openPopup(popupEdit);
 });
 
@@ -98,11 +99,10 @@ formEdit.addEventListener('submit', handleEditFormSubmit);
 formAdd.addEventListener('submit', handleAddFormSubmit);
 
 initialCards.forEach(data => {
-  const card = new Card(data, '#card-template');
-  addCard(card.generationCard());
+  addCard(createCard(data));
 });
 
-const formList = Array.from(document.querySelectorAll(validateSettings.formSelector));
-formList.forEach(formElement => {
-  new FormValidator(validateSettings, formElement).enableValidation();
-});
+const formEditValidator = new FormValidator(validateSettings, formEdit);
+formEditValidator.enableValidation();
+const formAddValidator = new FormValidator(validateSettings, formAdd);
+formAddValidator.enableValidation();
