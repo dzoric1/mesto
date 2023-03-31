@@ -1,9 +1,11 @@
-import Card from './modules/Card.js';
-import FormValidator from './modules/FormValidator.js';
-import Section from './modules/section.js';
-import PopupWithImage from './modules/PopupWithImage.js';
-import PopupWithForm from './modules/PopupWithForm.js';
-import UserInfo from './modules/UserInfo.js';
+import './index.css';
+
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
+import Section from '../components/section.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import UserInfo from '../components/UserInfo.js';
 
 import {
   formEdit,
@@ -16,7 +18,7 @@ import {
   profileSelectors,
   imagePopupSelectors,
   initialCards
-} from './modules/variables.js'
+} from '../utils/variables.js'
 
 const handleCardClick = (e) => {
   popupWithImage.open(e);

@@ -5,7 +5,7 @@
    min-width: 18px;
    height: 19px;
    border: none;
-   background: url("../../../images/delete.svg");
+   background: url("../../../assets/images/delete.svg");
    background-repeat: no-repeat;
    background-position: center;
    cursor: pointer;
