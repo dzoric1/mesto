@@ -12,7 +12,7 @@ class UserInfo {
   }
 
   setUserInfo({ name, job }) {
-    this.name.textContent = name;
+    this._name.textContent = name;
     this._job.textContent = job;
   }
 }

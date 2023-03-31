@@ -13,8 +13,8 @@ class Popup {
     document.removeEventListener('keydown', this._closeEscPopup);
   }
 
-  _closeEscPopup(e) {
-    if (evt.key === 'Escape') {
+  _closeEscPopup = (e) => {
+    if (e.key === 'Escape') {
       this.close();
     }
   }
