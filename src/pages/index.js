@@ -34,10 +34,14 @@ const handleEditFormSubmit = ({ name, job }) => {
   popupEdit.close();
 };
 
+const createCard = (data) => {
+  const cardElement = new Card(data, '#card-template', handleCardClick).generationCard();
+  return cardElement;
+}
+
 const renderCard = (data) => {
-  const card = new Card(data, '#card-template', handleCardClick).generationCard();
-  cardList.addItem(card);
-};
+  cardList.addItem(createCard(data));
+}
 
 const cardList = new Section({ items: initialCards, renderer: renderCard }, '.gallery__cards')
 cardList.render();
@@ -54,18 +58,30 @@ const popupAdd = new PopupWithForm('.popup_type_add', handleAddFormSubmit);
 popupAdd.setEventListeners();
 
 profileEditButton.addEventListener('click', () => {
-  inputName.value = userInfo.getUserInfo().name;
-  inputJob.value = userInfo.getUserInfo().job;
-  formEditValidator.singleValidation();
+  const { job, name } = userInfo.getUserInfo();
+  inputName.value = name;
+  inputJob.value = job;
+  formValidators['form-edit'].resetValidation();
   popupEdit.open();
 });
 
 profileAddButton.addEventListener('click', () => {
-  formAddValidator.singleValidation();
+  formValidators['form-add'].resetValidation();
   popupAdd.open();
 });
 
-const formEditValidator = new FormValidator(validateSettings, formEdit);
-formEditValidator.enableValidation();
-const formAddValidator = new FormValidator(validateSettings, formAdd);
-formAddValidator.enableValidation();
+const formValidators = {}
+
+const enableValidation = (config) => {
+  const formList = document.querySelectorAll(config.formSelector);
+  formList.forEach(formElement => {
+    const validator = new FormValidator(config, formElement);
+    const formName = formElement.getAttribute('name');
+
+    formValidators[formName] = validator;
+    validator.enableValidation()
+  })
+}
+
+enableValidation(validateSettings);
+

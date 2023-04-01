@@ -39,7 +39,7 @@ class FormValidator {
     errorElement.textContent = '';
   }
 
-  singleValidation() {
+  resetValidation() {
     this._toggleButtonState();
 
     this._inputList.forEach(inputElement => {
