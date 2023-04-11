@@ -8,8 +8,8 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 
 import {
-  formEdit,
-  formAdd,
+  profileAvatarImg,
+  avatarEditButton,
   profileEditButton,
   profileAddButton,
   inputName,
@@ -28,6 +28,11 @@ const handleAddFormSubmit = (data) => {
   renderCard(data);
   popupAdd.close();
 };
+
+const handleAvatarFormSubmit = ({ avatar }) => {
+  profileAvatarImg.src = avatar
+  popupAvatarEdit.close()
+}
 
 const handleEditFormSubmit = ({ name, job }) => {
   userInfo.setUserInfo({ name, job });
@@ -57,6 +62,9 @@ popupEdit.setEventListeners();
 const popupAdd = new PopupWithForm('.popup_type_add', handleAddFormSubmit);
 popupAdd.setEventListeners();
 
+const popupAvatarEdit = new PopupWithForm('.popup_type_avatar', handleAvatarFormSubmit);
+popupAvatarEdit.setEventListeners();
+
 profileEditButton.addEventListener('click', () => {
   const { job, name } = userInfo.getUserInfo();
   inputName.value = name;
@@ -69,6 +77,11 @@ profileAddButton.addEventListener('click', () => {
   formValidators['form-add'].resetValidation();
   popupAdd.open();
 });
+
+avatarEditButton.addEventListener('click', () => {
+  formValidators['form-avatar'].resetValidation();
+  popupAvatarEdit.open()
+})
 
 const formValidators = {}
 

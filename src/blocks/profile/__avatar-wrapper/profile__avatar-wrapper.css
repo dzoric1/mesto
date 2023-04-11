@@ -25,3 +25,9 @@
 .profile__avatar-wrapper:hover::before {
   opacity: 1;
 }
+
+@media screen and (max-width: 767px) {
+  .profile__avatar-wrapper {
+    margin: 0 0 22px 0;
+  }
+}

@@ -5,6 +5,8 @@ export const
   profileAddButton = document.querySelector('.profile__add-button'),
   inputName = document.querySelector('.popup__form-input_type_name'),
   inputJob = document.querySelector('.popup__form-input_type_job'),
+  profileAvatarImg = document.querySelector('.profile__avatar'),
+  avatarEditButton = document.querySelector('.profile__avatar-wrapper'),
   validateSettings = {
     formSelector: '.popup__form',
     inputSelector: '.popup__form-input',
