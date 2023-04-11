@@ -85,3 +85,9 @@ const enableValidation = (config) => {
 
 enableValidation(validateSettings);
 
+document.querySelectorAll('.card__like').forEach(item => {
+  item.addEventListener('click', (e) => {
+    e.target.parentNode.querySelector('.card__like-count').textContent = 1
+  })
+})
+
