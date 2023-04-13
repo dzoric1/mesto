@@ -23,29 +23,10 @@ export const
     imageSelector: '.popup__image',
     textSelector: '.popup__location'
   },
-  initialCards = [
-    {
-      location: 'Архыз',
-      url: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-      location: 'Челябинская область',
-      url: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-      location: 'Иваново',
-      url: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-      location: 'Камчатка',
-      url: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-      location: 'Холмогорский район',
-      url: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-      location: 'Байкал',
-      url: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  apiSettings = {
+    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-64',
+    headers: {
+      authorization: '20215c55-16b8-4e5b-8b47-0ed8b95a6c7d',
+      'Content-Type': 'application/json'
     }
-  ];
+  }

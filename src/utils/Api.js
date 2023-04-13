@@ -1,19 +1,55 @@
 class Api {
-  constructor(options) {
-    // тело конструктора
+  constructor({ baseUrl, headers }) {
+    this._baseUrl = baseUrl
+    this._headers = headers
   }
 
-  getInitialCards() {
-    // ...
+  _doFetch = async (url, method, data) => {
+    let res;
+
+    if (data) {
+
+      res = await fetch(url, {
+        method,
+        headers: this._headers,
+        body: JSON.stringify(data)
+      });
+
+    } else {
+
+      res = await fetch(url, {
+        method,
+        headers: this._headers,
+      });
+
+    }
+
+    if (!res.ok) {
+      throw new Error(`Fail to fetch - ${url}, status: ${res.status}`);
+    }
+
+    return res.json();
   }
 
-  // другие методы работы с API
+  getUserInfo = async () => {
+    return await this._doFetch(`${this._baseUrl}/users/me`, 'GET')
+  }
+
+  getCards = async () => {
+    return await this._doFetch(`${this._baseUrl}/cards`, 'GET')
+  }
+
+  patchUserInfo = async (data) => {
+    return await this._doFetch(`${this._baseUrl}/users/me`, 'PATCH', data)
+  }
+
+  addCard = async (data) => {
+    return await this._doFetch(`${this._baseUrl}/cards`, 'POST', data)
+  }
+
+  deleteCard = async (id) => {
+    return await this._doFetch(`${this._baseUrl}/cards/${id}`, 'DELETE')
+  }
 }
 
-const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-64',
-  headers: {
-    authorization: '20215c55-16b8-4e5b-8b47-0ed8b95a6c7d',
-    'Content-Type': 'application/json'
-  }
-}); 
+export default Api;

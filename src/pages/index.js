@@ -6,6 +6,7 @@ import Section from '../components/section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
+import Api from '../utils/Api.js'
 
 import {
   profileAvatarImg,
@@ -17,8 +18,23 @@ import {
   validateSettings,
   profileSelectors,
   imagePopupSelectors,
-  initialCards
+  apiSettings
 } from '../utils/variables.js'
+
+let cardList;
+
+const userInfo = new UserInfo(profileSelectors);
+const api = new Api(apiSettings);
+
+Promise.all([
+  api.getUserInfo(),
+  api.getCards()
+])
+  .then(([userData, cardsData]) => {
+    renderInitialCards(cardsData)
+    userInfo.setUserInfo(userData)
+    console.log(userData)
+  })
 
 const handleCardClick = (e) => {
   popupWithImage.open(e);
@@ -30,8 +46,8 @@ const handleAddFormSubmit = (data) => {
 };
 
 const handleAvatarFormSubmit = ({ avatar }) => {
-  profileAvatarImg.src = avatar
-  popupAvatarEdit.close()
+  profileAvatarImg.src = avatar;
+  popupAvatarEdit.close();
 }
 
 const handleEditFormSubmit = ({ name, job }) => {
@@ -39,19 +55,19 @@ const handleEditFormSubmit = ({ name, job }) => {
   popupEdit.close();
 };
 
-const createCard = (data) => {
-  const cardElement = new Card(data, '#card-template', handleCardClick).generationCard();
-  return cardElement;
-}
-
 const renderCard = (data) => {
-  cardList.addItem(createCard(data));
+  const cardElement = new Card(data, '#card-template', handleCardClick).generationCard();
+  cardList.addItem(cardElement);
 }
 
-const cardList = new Section({ items: initialCards, renderer: renderCard }, '.gallery__cards')
-cardList.render();
+const renderInitialCards = (items) => {
+  cardList = new Section({
+    items: items.reverse(),
+    renderer: renderCard
+  }, '.gallery__cards')
 
-const userInfo = new UserInfo(profileSelectors);
+  cardList.render();
+}
 
 const popupWithImage = new PopupWithImage(imagePopupSelectors);
 popupWithImage.setEventListeners();
@@ -98,9 +114,9 @@ const enableValidation = (config) => {
 
 enableValidation(validateSettings);
 
-document.querySelectorAll('.card__like').forEach(item => {
-  item.addEventListener('click', (e) => {
-    e.target.parentNode.querySelector('.card__like-count').textContent = 1
-  })
-})
+// document.querySelectorAll('.card__like').forEach(item => {
+//   item.addEventListener('click', (e) => {
+//     e.target.parentNode.querySelector('.card__like-count').textContent = 1
+//   })
+// })
 

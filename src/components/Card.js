@@ -1,7 +1,7 @@
 class Card {
   constructor(data, templateSelector, handleCardClick) {
-    this._title = data.location;
-    this._url = data.url;
+    this._title = data.name ? data.name : 'Ошибка';
+    this._url = data.link ? data.link : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2Rb_W95ZcEiaUkFvB3cV7xeU67nHh-erfGPRTikVJmA&s';
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
   }
