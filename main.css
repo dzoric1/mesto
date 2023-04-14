@@ -7,7 +7,8 @@
 .content{margin:0 auto;padding:0 19px}
 .content__profile{margin:40px 0 50px}@media screen and (max-width:767px){.content__profile{margin:38px 0 36px}}
 .profile{align-items:center;display:flex;justify-content:flex-end}@media screen and (max-width:767px){.profile{flex-direction:column;justify-content:center}}
-.profile__avatar{border-radius:50%;margin-right:30px;max-width:120px;-o-object-fit:cover;object-fit:cover}@media screen and (max-width:767px){.profile__avatar{margin:0 0 22px}}
+.profile__avatar{border-radius:50%;height:120px;-o-object-fit:cover;object-fit:cover;transition:opacity .3s ease;width:120px}.profile__avatar:hover{opacity:.2}
+.profile__avatar-wrapper{border-radius:50%;cursor:pointer;margin-right:30px;position:relative}.profile__avatar-wrapper:before{background:url(6c7bf05444b9793fdf6e.svg);background-position:50%;background-repeat:no-repeat;background-size:contain;content:"";display:inline-block;height:26px;left:50%;opacity:0;position:absolute;top:50%;transform:translate(-13px,-13px);transition:opacity .3s ease;width:26px}.profile__avatar-wrapper:hover:before{opacity:1}@media screen and (max-width:767px){.profile__avatar-wrapper{margin:0 0 22px}}
 .profile__info{color:#fff;-moz-column-gap:18px;column-gap:18px;display:grid;grid-template:repeat(2,auto) /repeat(2,auto)}@media screen and (max-width:767px){.profile__info{-moz-column-gap:10px;column-gap:10px;padding-left:34px}}
 .profile__name{font-size:42px;font-weight:500;line-height:48px;margin:0 0 8px;max-width:350px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}@media screen and (max-width:767px){.profile__name{font-size:27px;justify-self:center;line-height:33px;margin:0 0 6px;max-width:250px}}
 .profile__edit-button{align-self:center;background:url(6c7bf05444b9793fdf6e.svg);background-position:50%;background-repeat:no-repeat;border:1px solid #fff;cursor:pointer;height:24px;line-height:48px;margin-bottom:6px;transition:opacity .3s ease;width:24px}.profile__edit-button:hover{opacity:.6}@media screen and (max-width:767px){.profile__edit-button{height:18px;width:18px}}
@@ -17,11 +18,14 @@
 .gallery__cards{display:grid;gap:20px 17px;grid-template-columns:repeat(3,1fr);list-style:none;margin:0;padding:0}@media screen and (max-width:860px){.gallery__cards{grid-template-columns:repeat(2,1fr)}}@media screen and (max-width:580px){.gallery__cards{grid-template-columns:repeat(1,1fr)}}
 .card{border-radius:10px;display:flex;flex-direction:column;overflow:hidden;position:relative}
 .card__image{aspect-ratio:1;cursor:pointer;line-height:0;-o-object-fit:cover;object-fit:cover;width:100%}
-.card__heading{background-color:#fff;display:flex;justify-content:space-between;padding:26px 20px}
-.card__title{font-size:24px;font-weight:900;line-height:1;margin:0 30px 0 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.card__heading{background-color:#fff;display:flex;justify-content:space-between;padding:22px 20px}
+.card__title{align-self:center;font-size:24px;font-weight:900;line-height:35px;margin:0 30px 0 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.card__like-field{align-items:center;display:flex;flex-direction:column;justify-content:center}
 .card__like{align-self:center;background:url(1ad06e85f169668a1f36.svg);background-position:50%;background-repeat:no-repeat;border:none;cursor:pointer;height:19px;min-width:22px;transition:opacity .3s ease,background .2s}.card__like:hover{opacity:.5}
+.card__like-count{align-self:center;font-size:13px;line-height:16px;text-align:center}
 .card__like_active{background:url(35948469632d0421d697.svg)}
 .card__delete{background:url(ce3b64935accf9b8212e.svg);background-position:50%;background-repeat:no-repeat;border:none;cursor:pointer;height:19px;min-width:18px;position:absolute;right:20px;top:20px;transition:opacity .3s ease}.card__delete:hover{opacity:.6}
+.card__delete_hide{display:none}
 .footer{padding:42px 19px 63px}@media screen and (max-width:767px){.footer{padding:27px 19px 36px}}
 .footer__copyright{color:#545454;font-size:18px;font-weight:400;line-height:1;margin:0}@media screen and (max-width:767px){.footer__copyright{font-size:14px}}
 .popup{align-items:center;background-color:rgba(0,0,0,.5);display:flex;height:100vh;justify-content:center;left:0;opacity:0;position:fixed;right:0;top:0;transition:opacity .3s ease,visibility .3s ease;visibility:hidden;width:100%}
