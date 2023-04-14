@@ -1,5 +1,11 @@
 class Card {
-  constructor(data, templateSelector, handleCardClick, handleCardDeleteClick) {
+  constructor(
+    data,
+    templateSelector,
+    handleCardClick,
+    handleCardDeleteClick,
+    handleCardLikeClick) {
+
     this._title = data.name;
     this._url = data.link;
     this._likes = data.likes;
@@ -8,6 +14,7 @@ class Card {
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
     this._handleCardDeleteClick = handleCardDeleteClick;
+    this._handleCardLikeClick = handleCardLikeClick;
   }
 
   _getTemplate() {
@@ -16,8 +23,14 @@ class Card {
   }
 
   _setEventListeners() {
-    this._element.querySelector('.card__like').addEventListener('click', e => {
+    this._likeButton.addEventListener('click', e => {
       e.target.classList.toggle('card__like_active');
+      if (e.target.classList.contains('card__like_active')) {
+        this._likeCounter.textContent++
+      } else {
+        this._likeCounter.textContent === '1' ? this._likeCounter.textContent = '' : this._likeCounter.textContent--
+      }
+      this._handleCardLikeClick(e)
     });
 
     this._delete.addEventListener('click', (e) => {
@@ -33,9 +46,14 @@ class Card {
     this._element = this._getTemplate();
     this._element.setAttribute('id', this._id)
     this._element.querySelector('.card__title').textContent = this._title;
-    this._element.querySelector('.card__like-count').textContent = this._likes.length;
+    this._likeCounter = this._element.querySelector('.card__like-count');
+    this._likeButton = this._element.querySelector('.card__like');
+    if (this._likes.some(like => like._id === "c480573b2234194e528595b2")) {
+      this._likeButton.classList.add('card__like_active')
+    }
+    this._likeCounter.textContent = this._likes.length ? this._likes.length : '';
     this._delete = this._element.querySelector('.card__delete')
-    if (!(this._ownerId == "c480573b2234194e528595b2")) this._delete.classList.add('card__delete_hide')
+    if (!(this._ownerId === "c480573b2234194e528595b2")) this._delete.classList.add('card__delete_hide')
     this._cardImage = this._element.querySelector('.card__image');
     this._cardImage.setAttribute('src', this._url);
     this._cardImage.setAttribute('alt', this._title);

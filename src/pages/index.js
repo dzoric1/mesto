@@ -24,6 +24,8 @@ import {
 
 let cardList;
 
+const myId = 'c480573b2234194e528595b2';
+
 const userInfo = new UserInfo(profileSelectors);
 const api = new Api(apiSettings);
 
@@ -42,6 +44,16 @@ Promise.all([
 const handleCardClick = (e) => {
   popupWithImage.open(e);
 };
+
+const handleCardLikeClick = (e) => {
+  let cardId = e.target.closest('.card').id;
+
+  if (e.target.classList.contains('card__like_active')) {
+    api.toggleLike(cardId, 'PUT')
+  } else {
+    api.toggleLike(cardId, 'DELETE')
+  }
+}
 
 const handleCardDeleteClick = (e) => {
   e.target.parentNode.id
@@ -82,7 +94,7 @@ const handleEditFormSubmit = (data) => {
 };
 
 const renderCard = (data) => {
-  const cardElement = new Card(data, '#card-template', handleCardClick, handleCardDeleteClick).generationCard();
+  const cardElement = new Card(data, '#card-template', handleCardClick, handleCardDeleteClick, handleCardLikeClick).generationCard();
   cardList.addItem(cardElement);
 }
 
@@ -142,9 +154,3 @@ const enableValidation = (config) => {
 }
 
 enableValidation(validateSettings);
-
-// document.querySelectorAll('.card__like').forEach(item => {
-//   item.addEventListener('click', (e) => {
-//     e.target.parentNode.querySelector('.card__like-count').textContent = 1
-//   })
-// })

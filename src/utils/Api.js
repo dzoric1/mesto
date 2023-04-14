@@ -54,6 +54,10 @@ class Api {
   deleteCard = async (id) => {
     return await this._doFetch(`${this._baseUrl}/cards/${id}`, 'DELETE')
   }
+
+  toggleLike = async (id, method) => {
+    return await this._doFetch(`${this._baseUrl}/cards/${id}/likes`, method)
+  }
 }
 
 export default Api;
