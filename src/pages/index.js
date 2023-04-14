@@ -37,8 +37,6 @@ Promise.all([
     renderInitialCards(cardsData)
     userInfo.setUserInfo(userData)
     profileAvatarImg.src = userData.avatar;
-    console.log(userData)
-    console.log(cardsData)
   })
 
 const handleCardClick = (e) => {
@@ -94,7 +92,13 @@ const handleEditFormSubmit = (data) => {
 };
 
 const renderCard = (data) => {
-  const cardElement = new Card(data, '#card-template', handleCardClick, handleCardDeleteClick, handleCardLikeClick).generationCard();
+  const cardElement = new Card(
+    data,
+    '#card-template',
+    handleCardClick,
+    handleCardDeleteClick,
+    handleCardLikeClick
+  ).generationCard();
   cardList.addItem(cardElement);
 }
 
