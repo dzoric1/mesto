@@ -19,12 +19,11 @@ import {
   validateSettings,
   profileSelectors,
   imagePopupSelectors,
-  apiSettings
+  apiSettings,
+  userId
 } from '../utils/variables.js'
 
 let cardList;
-
-const myId = 'c480573b2234194e528595b2';
 
 const userInfo = new UserInfo(profileSelectors);
 const api = new Api(apiSettings);
@@ -80,7 +79,6 @@ const handleAvatarFormSubmit = ({ avatar }) => {
       profileAvatarImg.src = avatar;
       popupAvatarEdit.close();
     })
-
 }
 
 const handleEditFormSubmit = (data) => {
@@ -97,7 +95,8 @@ const renderCard = (data) => {
     '#card-template',
     handleCardClick,
     handleCardDeleteClick,
-    handleCardLikeClick
+    handleCardLikeClick,
+    userId
   ).generationCard();
   cardList.addItem(cardElement);
 }
@@ -151,7 +150,6 @@ const enableValidation = (config) => {
   formList.forEach(formElement => {
     const validator = new FormValidator(config, formElement);
     const formName = formElement.getAttribute('name');
-
     formValidators[formName] = validator;
     validator.enableValidation()
   })

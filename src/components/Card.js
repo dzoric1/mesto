@@ -4,7 +4,8 @@ class Card {
     templateSelector,
     handleCardClick,
     handleCardDeleteClick,
-    handleCardLikeClick) {
+    handleCardLikeClick,
+    userId) {
 
     this._title = data.name;
     this._url = data.link;
@@ -15,6 +16,7 @@ class Card {
     this._handleCardClick = handleCardClick;
     this._handleCardDeleteClick = handleCardDeleteClick;
     this._handleCardLikeClick = handleCardLikeClick;
+    this._userId = userId;
   }
 
   _getTemplate() {
@@ -48,12 +50,12 @@ class Card {
     this._element.querySelector('.card__title').textContent = this._title;
     this._likeCounter = this._element.querySelector('.card__like-count');
     this._likeButton = this._element.querySelector('.card__like');
-    if (this._likes.some(like => like._id === "c480573b2234194e528595b2")) {
+    if (this._likes.some(like => like._id === this._userId)) {
       this._likeButton.classList.add('card__like_active')
     }
     this._likeCounter.textContent = this._likes.length ? this._likes.length : '';
     this._delete = this._element.querySelector('.card__delete')
-    if (!(this._ownerId === "c480573b2234194e528595b2")) this._delete.classList.add('card__delete_hide')
+    if (!(this._ownerId === this._userId)) this._delete.classList.add('card__delete_hide')
     this._cardImage = this._element.querySelector('.card__image');
     this._cardImage.setAttribute('src', this._url);
     this._cardImage.setAttribute('alt', this._title);
