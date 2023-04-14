@@ -5,6 +5,7 @@ import FormValidator from '../components/FormValidator.js';
 import Section from '../components/section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithConfirm from '../components/PopupWithConfirm';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../utils/Api.js'
 
@@ -33,30 +34,55 @@ Promise.all([
   .then(([userData, cardsData]) => {
     renderInitialCards(cardsData)
     userInfo.setUserInfo(userData)
+    profileAvatarImg.src = userData.avatar;
     console.log(userData)
+    console.log(cardsData)
   })
 
 const handleCardClick = (e) => {
   popupWithImage.open(e);
 };
 
-const handleAddFormSubmit = (data) => {
-  renderCard(data);
-  popupAdd.close();
-};
-
-const handleAvatarFormSubmit = ({ avatar }) => {
-  profileAvatarImg.src = avatar;
-  popupAvatarEdit.close();
+const handleCardDeleteClick = (e) => {
+  e.target.parentNode.id
+  popupWithConfirm.open(e.target.parentNode.id)
 }
 
-const handleEditFormSubmit = ({ name, job }) => {
-  userInfo.setUserInfo({ name, job });
-  popupEdit.close();
+const handleAddFormSubmit = (data) => {
+  api.addCard(data)
+    .then(data => {
+      renderCard(data);
+      popupAdd.close();
+    })
+};
+
+const handleDeleteSubmit = (id) => {
+  api.deleteCard(id)
+    .then(() => {
+      document.querySelector(`[id='${id}']`).remove()
+    })
+  popupWithConfirm.close()
+}
+
+const handleAvatarFormSubmit = ({ avatar }) => {
+  api.updateAvatar({ avatar })
+    .then(({ avatar }) => {
+      profileAvatarImg.src = avatar;
+      popupAvatarEdit.close();
+    })
+
+}
+
+const handleEditFormSubmit = (data) => {
+  api.patchUserInfo(data)
+    .then((data) => {
+      userInfo.setUserInfo(data);
+      popupEdit.close();
+    })
 };
 
 const renderCard = (data) => {
-  const cardElement = new Card(data, '#card-template', handleCardClick).generationCard();
+  const cardElement = new Card(data, '#card-template', handleCardClick, handleCardDeleteClick).generationCard();
   cardList.addItem(cardElement);
 }
 
@@ -68,6 +94,9 @@ const renderInitialCards = (items) => {
 
   cardList.render();
 }
+
+const popupWithConfirm = new PopupWithConfirm('.popup_type_confirm', handleDeleteSubmit);
+popupWithConfirm.setEventListeners();
 
 const popupWithImage = new PopupWithImage(imagePopupSelectors);
 popupWithImage.setEventListeners();
@@ -119,4 +148,3 @@ enableValidation(validateSettings);
 //     e.target.parentNode.querySelector('.card__like-count').textContent = 1
 //   })
 // })
-

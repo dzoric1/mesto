@@ -43,6 +43,10 @@ class Api {
     return await this._doFetch(`${this._baseUrl}/users/me`, 'PATCH', data)
   }
 
+  updateAvatar = async (data) => {
+    return await this._doFetch(`${this._baseUrl}/users/me/avatar`, 'PATCH', data)
+  }
+
   addCard = async (data) => {
     return await this._doFetch(`${this._baseUrl}/cards`, 'POST', data)
   }
