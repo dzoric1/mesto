@@ -38,9 +38,8 @@ Promise.all([
     renderInitialCards(cardsData);
     userInfo.setUserInfo(userData);
     profileAvatarImg.src = userData.avatar;
-    console.log(cardsData);
-    console.log(userData);
   })
+  .catch(err => console.warn(err))
 
 const handleCardClick = (src, alt) => {
   popupWithImage.open(src, alt);
@@ -66,6 +65,7 @@ const handleAddFormSubmit = (data) => {
       renderCard(data);
       popupAdd.close();
     })
+    .catch(err => console.warn(err))
     .finally(() => popupAdd.setSubmitButtonText('Создать'))
 };
 
@@ -74,6 +74,7 @@ const handleDeleteSubmit = (id) => {
     .then(() => {
       cards[id].deleteCard();
     })
+    .catch(err => console.warn(err))
   popupWithConfirm.close()
 }
 
@@ -83,6 +84,7 @@ const handleAvatarFormSubmit = ({ avatar }) => {
       profileAvatarImg.src = avatar;
       popupAvatarEdit.close();
     })
+    .catch(err => console.warn(err))
     .finally(() => popupAvatarEdit.setSubmitButtonText('Сохранить'))
 }
 
@@ -92,6 +94,7 @@ const handleEditFormSubmit = (data) => {
       userInfo.setUserInfo(data);
       popupEdit.close();
     })
+    .catch(err => console.warn(err))
     .finally(() => popupEdit.setSubmitButtonText('Сохранить'))
 };
 
