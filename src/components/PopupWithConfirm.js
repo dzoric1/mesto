@@ -8,10 +8,8 @@ class PopupWithConfirm extends Popup {
     this._submitButton = this._popup.querySelectorAll('[type="submit"]');
   }
 
-  id = null;
-
   open(id) {
-    this._submitButton.textContent = 'Сохранить';
+    // this._submitButton.textContent = 'Сохранить';
     this.id = id
     super.open()
   }

@@ -10,7 +10,6 @@ class PopupWithForm extends Popup {
   }
 
   open() {
-    this._submitButton.textContent = 'Сохранить';
     super.open();
   }
 
@@ -25,10 +24,14 @@ class PopupWithForm extends Popup {
   setEventListeners() {
     this._form.addEventListener('submit', (e) => {
       e.preventDefault();
-      this._submitButton.textContent = 'Сохранение...';
+      this.setSubmitButtonText('Сохранение...');
       this._handleSubmit(this._getInputValues());
     })
     super.setEventListeners();
+  }
+
+  setSubmitButtonText(text) {
+    this._submitButton.textContent = text;
   }
 
   close() {

@@ -7,10 +7,10 @@ class PopupWithImage extends Popup {
     this._text = this._popup.querySelector(textSelector);
   }
 
-  open(e) {
-    this._image.setAttribute('src', e.target.src);
-    this._image.setAttribute('alt', e.target.alt);
-    this._text.textContent = e.target.alt;
+  open(src, alt) {
+    this._image.setAttribute('src', src);
+    this._image.setAttribute('alt', alt);
+    this._text.textContent = alt;
     super.open();
   }
 }

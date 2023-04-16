@@ -29,5 +29,4 @@ export const
       authorization: '20215c55-16b8-4e5b-8b47-0ed8b95a6c7d',
       'Content-Type': 'application/json'
     }
-  },
-  userId = 'c480573b2234194e528595b2';
+  }

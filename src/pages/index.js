@@ -20,10 +20,11 @@ import {
   profileSelectors,
   imagePopupSelectors,
   apiSettings,
-  userId
 } from '../utils/variables.js'
 
 let cardList;
+let userId;
+let cards = {};
 
 const userInfo = new UserInfo(profileSelectors);
 const api = new Api(apiSettings);
@@ -33,28 +34,30 @@ Promise.all([
   api.getCards()
 ])
   .then(([userData, cardsData]) => {
-    renderInitialCards(cardsData)
-    userInfo.setUserInfo(userData)
+    userId = userData._id;
+    renderInitialCards(cardsData);
+    userInfo.setUserInfo(userData);
     profileAvatarImg.src = userData.avatar;
+    console.log(cardsData);
+    console.log(userData);
   })
 
-const handleCardClick = (e) => {
-  popupWithImage.open(e);
+const handleCardClick = (src, alt) => {
+  popupWithImage.open(src, alt);
 };
 
-const handleCardLikeClick = (e) => {
-  let cardId = e.target.closest('.card').id;
-
-  if (e.target.classList.contains('card__like_active')) {
-    api.toggleLike(cardId, 'PUT')
+const handleCardLikeClick = async (cardId, isLiked) => {
+  if (isLiked) {
+    const res = await api.toggleLike(cardId, 'DELETE');
+    return res;
   } else {
-    api.toggleLike(cardId, 'DELETE')
+    const res = await api.toggleLike(cardId, 'PUT');
+    return res;
   }
 }
 
-const handleCardDeleteClick = (e) => {
-  e.target.parentNode.id
-  popupWithConfirm.open(e.target.parentNode.id)
+const handleCardDeleteClick = (id) => {
+  popupWithConfirm.open(id)
 }
 
 const handleAddFormSubmit = (data) => {
@@ -63,12 +66,13 @@ const handleAddFormSubmit = (data) => {
       renderCard(data);
       popupAdd.close();
     })
+    .finally(() => popupAdd.setSubmitButtonText('Создать'))
 };
 
 const handleDeleteSubmit = (id) => {
   api.deleteCard(id)
     .then(() => {
-      document.querySelector(`[id='${id}']`).remove()
+      cards[id].deleteCard();
     })
   popupWithConfirm.close()
 }
@@ -79,6 +83,7 @@ const handleAvatarFormSubmit = ({ avatar }) => {
       profileAvatarImg.src = avatar;
       popupAvatarEdit.close();
     })
+    .finally(() => popupAvatarEdit.setSubmitButtonText('Сохранить'))
 }
 
 const handleEditFormSubmit = (data) => {
@@ -87,17 +92,20 @@ const handleEditFormSubmit = (data) => {
       userInfo.setUserInfo(data);
       popupEdit.close();
     })
+    .finally(() => popupEdit.setSubmitButtonText('Сохранить'))
 };
 
 const renderCard = (data) => {
-  const cardElement = new Card(
+  const card = new Card(
     data,
     '#card-template',
     handleCardClick,
     handleCardDeleteClick,
     handleCardLikeClick,
     userId
-  ).generationCard();
+  );
+  cards[data._id] = card;
+  const cardElement = card.generationCard();
   cardList.addItem(cardElement);
 }
 
@@ -140,8 +148,8 @@ profileAddButton.addEventListener('click', () => {
 
 avatarEditButton.addEventListener('click', () => {
   formValidators['form-avatar'].resetValidation();
-  popupAvatarEdit.open()
-})
+  popupAvatarEdit.open();
+});
 
 const formValidators = {}
 
