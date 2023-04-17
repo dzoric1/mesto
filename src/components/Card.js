@@ -26,13 +26,11 @@ class Card {
 
   _setEventListeners() {
     this._likeButton.addEventListener('click', () => {
-      this._handleCardLikeClick(this._id, this._isLikeActive())
-        .then(res => this._setLikes(res.likes.length))
-      this._likeButton.classList.toggle('card__like_active');
+      this._handleCardLikeClick(this, this._isLikeActive());
     });
 
     this._deleteButton.addEventListener('click', () => {
-      this._handleCardDeleteClick(this._id)
+      this._handleCardDeleteClick(this);
     });
 
     this._cardImage.addEventListener('click', () => {
@@ -49,7 +47,7 @@ class Card {
     this._likeButton = this._element.querySelector('.card__like');
     this._likeCounter = this._element.querySelector('.card__like-count');
     this._deleteButton = this._element.querySelector('.card__delete');
-    this._setLikes(this._likes.length);
+    this.setLikes(this._likes.length);
     this._isLiked();
     this._isHideDeleteButton();
     this._setEventListeners();
@@ -57,7 +55,11 @@ class Card {
     return this._element;
   }
 
-  _setLikes(count) {
+  toggleLike() {
+    this._likeButton.classList.toggle('card__like_active');
+  }
+
+  setLikes(count) {
     this._likeCounter.textContent = count ? count : '';
   }
 

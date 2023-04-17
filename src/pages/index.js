@@ -24,7 +24,6 @@ import {
 
 let cardList;
 let userId;
-let cards = {};
 
 const userInfo = new UserInfo(profileSelectors);
 const api = new Api(apiSettings);
@@ -45,18 +44,26 @@ const handleCardClick = (src, alt) => {
   popupWithImage.open(src, alt);
 };
 
-const handleCardLikeClick = async (cardId, isLiked) => {
+const handleCardLikeClick = (card, isLiked) => {
   if (isLiked) {
-    const res = await api.toggleLike(cardId, 'DELETE');
-    return res;
+    api.toggleLike(card._id, 'DELETE')
+      .then(res => {
+        card.toggleLike();
+        card.setLikes(res.likes.length);
+      })
+      .catch(err => console.warn(err))
   } else {
-    const res = await api.toggleLike(cardId, 'PUT');
-    return res;
+    api.toggleLike(card._id, 'PUT')
+      .then(res => {
+        card.toggleLike();
+        card.setLikes(res.likes.length);
+      })
+      .catch(err => console.warn(err))
   }
 }
 
-const handleCardDeleteClick = (id) => {
-  popupWithConfirm.open(id)
+const handleCardDeleteClick = (card) => {
+  popupWithConfirm.open(card)
 }
 
 const handleAddFormSubmit = (data) => {
@@ -69,13 +76,14 @@ const handleAddFormSubmit = (data) => {
     .finally(() => popupAdd.setSubmitButtonText('Создать'))
 };
 
-const handleDeleteSubmit = (id) => {
-  api.deleteCard(id)
+const handleDeleteSubmit = (card) => {
+  api.deleteCard(card._id)
     .then(() => {
-      cards[id].deleteCard();
+      card.deleteCard();
+      popupWithConfirm.close()
     })
     .catch(err => console.warn(err))
-  popupWithConfirm.close()
+
 }
 
 const handleAvatarFormSubmit = ({ avatar }) => {
@@ -107,7 +115,6 @@ const renderCard = (data) => {
     handleCardLikeClick,
     userId
   );
-  cards[data._id] = card;
   const cardElement = card.generationCard();
   cardList.addItem(cardElement);
 }

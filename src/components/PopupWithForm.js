@@ -9,10 +9,6 @@ class PopupWithForm extends Popup {
     this._submitButton = this._popup.querySelector('[type="submit"]')
   }
 
-  open() {
-    super.open();
-  }
-
   _getInputValues() {
     const inputValues = {}
     this._inputs.forEach(input => {

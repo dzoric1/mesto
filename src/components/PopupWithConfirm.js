@@ -5,20 +5,19 @@ class PopupWithConfirm extends Popup {
     super(popupSelector);
     this._handleSubmit = handleSubmit
     this._form = this._popup.querySelector('.popup__form');
-    this._submitButton = this._popup.querySelectorAll('[type="submit"]');
+    this._submitButton = this._popup.querySelector('[type="submit"]');
   }
 
-  open(id) {
-    // this._submitButton.textContent = 'Сохранить';
-    this.id = id
+  open(card) {
+    this._card = card
     super.open()
   }
 
   setEventListeners() {
     this._form.addEventListener('submit', (e) => {
       e.preventDefault();
-      this._submitButton.textContent = 'Сохранение...';
-      this._handleSubmit(this.id);
+      this._submitButton.textContent = 'Удаление...';
+      this._handleSubmit(this._card);
     })
     super.setEventListeners();
   }
